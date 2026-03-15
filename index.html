@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GearCalc</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e293b;
+            --background: #f1f5f9;
+            --card-bg: #ffffff;
+            --text: #0f172a;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* En-tête avec Logo Modifiable */
+        header {
+            display: flex;
+            flex-direction: column; /* Empilé sur mobile */
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .logo-container img {
+            width: 400px; /* C'est cette ligne qu'il faut changer */
+            height: auto;
+            border-radius: 12px;
+        }
+        
+
+        h1 {
+            font-size: 2rem;
+            color: var(--secondary);
+            margin: 0;
+            letter-spacing: -1px;
+        }
+
+        /* Conteneur principal */
+        .container {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 450px;
+            box-sizing: border-box;
+        }
+
+        .input-group { margin-bottom: 20px; }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            box-sizing: border-box;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); }
+
+        /* Résultats */
+        .results {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid #bfdbfe;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .result-label { font-weight: 500; color: #475569; }
+        .result-value { font-size: 1.4rem; font-weight: 800; color: var(--primary); }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 1.6rem; }
+            .container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="mon-logo.png" alt="Logo GearCalc" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3524/3524335.png'">
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="input-group">
+            <label>Dents Entrée (Z1)</label>
+            <input type="number" id="z1" value="10" oninput="calculer()">
+        </div>
+        
+        <div class="input-group">
+            <label>Dents Sortie (Z2)</label>
+            <input type="number" id="z2" value="40" oninput="calculer()">
+        </div>
+        
+        <div class="input-group">
+            <label>Couple Entrée (Nm)</label>
+            <input type="number" id="c1" value="5" oninput="calculer()">
+        </div>
+
+        <div class="results">
+            <div class="result-row">
+                <span class="result-label">Rapport :</span>
+                <span class="result-value" id="ratio">4.00</span>
+            </div>
+            <div class="result-row">
+                <span class="result-label">Couple Sortie :</span>
+                <span class="result-value"><span id="c2">20.00</span> Nm</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculer() {
+            let z1 = parseFloat(document.getElementById('z1').value) || 0;
+            let z2 = parseFloat(document.getElementById('z2').value) || 0;
+            let c1 = parseFloat(document.getElementById('c1').value) || 0;
+
+            if (z1 > 0 && z2 > 0) {
+                let ratio = z2 / z1;
+                document.getElementById('ratio').innerText = ratio.toFixed(2);
+                document.getElementById('c2').innerText = (c1 * ratio).toFixed(2);
+            }
+        }
+    </script>
+</body>
+</html>
